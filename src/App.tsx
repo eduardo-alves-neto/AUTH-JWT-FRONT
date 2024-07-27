@@ -1,21 +1,30 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
-import { Login } from "./components/Login";
 import { HomePage } from "./pages/home";
+import { SnackbarProvider } from "notistack";
+import { QueryClient, QueryClientProvider } from "react-query";
+import "./index.css";
+import { ToggleAuth } from "./components/auth/toggleAuth";
 
-const App: React.FC = () => {
+const App = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<HomePage />} />
-          </Route>
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <SnackbarProvider maxSnack={5}>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<ToggleAuth />} />
+              <Route element={<PrivateRoute />}>
+                <Route path="/home" element={<HomePage />} />
+              </Route>
+            </Routes>
+          </Router>
+        </AuthProvider>
+      </SnackbarProvider>
+    </QueryClientProvider>
   );
 };
 

@@ -4,9 +4,7 @@ export const HomePage = () => {
   return (
     <Container>
       <Typography variant="h2">Home Page</Typography>
-      <Typography variant="body1">
-        This is a private page only accessible to authenticated users.
-      </Typography>
+      <Typography variant="body1">User autenticado</Typography>
     </Container>
   );
 };
